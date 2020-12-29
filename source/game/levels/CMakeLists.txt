@@ -15,3 +15,7 @@ add_library(levels OBJECT
 )
 
 add_library(game::levels ALIAS levels)
+
+target_link_libraries(levels
+    PRIVATE
+        game::math)

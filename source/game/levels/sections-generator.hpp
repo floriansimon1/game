@@ -7,7 +7,7 @@
 
 namespace game::levels {
     [[nodiscard]] LevelSection
-    generate(
+    generateSections(
         const game::math::Dimension                         width,
         const game::math::Dimension                         height,
         game::math::random::ReproducibleDimensionGenerator& random

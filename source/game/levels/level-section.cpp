@@ -1,5 +1,9 @@
 #include <game/levels/level-section.hpp>
 
+#include <game/levels/level.hpp>
+
+#include <iostream>
+
 namespace game::levels {
     LevelSection::LevelSection(
         const game::math::Dimension                           width,
@@ -37,34 +41,34 @@ namespace game::levels {
         return this->subsection1 == nullptr;
     }
 
-    std::vector<game::math::Rectangle>
-    LevelSection::asRectangles() const
-    {
-        std::vector<game::math::Rectangle> list;
 
-        this->asRectangles(list, 0u, 0u);
+    void
+    LevelSection::writeSectionIds(
+        Level&                                                level,
+        const game::math::Dimension                           xOffset,
+        const game::math::Dimension                           yOffset
+    ) const {
+        if (this->isTerminal()) {
+            for (game::math::Dimension x = xOffset; x < xOffset + this->width; x++) {
+                for (game::math::Dimension y = yOffset; y < yOffset + this->height; y++) {
+                    level.getWriteableTile(x, y).sectionId = this->id;
+                }
+            }
+        } else {
+            this->subsection1->writeSectionIds(level, xOffset, yOffset);
 
-        return list;
+            this->subsection2->writeSectionIds(
+                level,
+                xOffset + (this->splitHorizontally   ? 0                         : this->subsection1->width),
+                yOffset + (this->splitHorizontally   ? this->subsection1->height : 0)
+            );
+        }
     }
 
     void
-    LevelSection::asRectangles(
-        std::vector<game::math::Rectangle>&     rectangles,
-        const game::math::Dimension             xOffset,
-        const game::math::Dimension             yOffset
+    LevelSection::writeSectionIds(
+        Level& level
     ) const {
-        if (this->isTerminal()) {
-            rectangles.emplace_back(xOffset, yOffset, this->width, this->height);
-
-            return;
-        }
-
-        this->subsection1->asRectangles(rectangles, xOffset, yOffset);
-
-        this->subsection2->asRectangles(
-            rectangles,
-            xOffset + (this->splitHorizontally   ? 0                         : this->subsection1->width),
-            yOffset + (this->splitHorizontally   ? this->subsection1->height : 0)
-        );
+        this->writeSectionIds(level, 0u, 0u);
     }
 }

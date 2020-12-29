@@ -6,10 +6,12 @@
 
 #include <vector>
 
+int main(int, char**);
+
 namespace game::levels {
     class Level {
         private:
-            std::vector<game::levels::Tile> tiles;
+            std::vector<Tile>                  tiles;
 
             game::math::Dimension
             getOffset(
@@ -18,25 +20,20 @@ namespace game::levels {
             ) const;
 
         public:
-            const game::math::Dimension   width;
-            const game::math::Dimension   height;
+            const game::math::Dimension        width;
+            const game::math::Dimension        height;
 
             Level(
                 const game::math::Dimension    width,
                 const game::math::Dimension    height
             );
 
-            void
-            write(
-                const game::math::Dimension   x,
-                const game::math::Dimension   y,
-                const game::math::Dimension   value
-            );
-
-            game::math::Dimension
-            read(
+            Tile&
+            getWriteableTile(
                 const game::math::Dimension   x,
                 const game::math::Dimension   y
-            ) const;
+            );
+
+            friend int ::main(int, char**);
     };
 }

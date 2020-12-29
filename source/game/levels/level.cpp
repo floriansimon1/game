@@ -9,20 +9,11 @@ namespace game::levels {
         return x * this->width + y;
     }
 
-    void
-    Level::write(
-        const game::math::Dimension   x,
-        const game::math::Dimension   y,
-        const game::math::Dimension   value
-    ) {
-        this->tiles[this->getOffset(x, y)] = value;
-    }
-
-    game::math::Dimension
-    Level::read(
+    Tile&
+    Level::getWriteableTile(
         const game::math::Dimension   x,
         const game::math::Dimension   y
-    ) const {
+    ) {
         return this->tiles[this->getOffset(x, y)];
     }
 
@@ -30,8 +21,8 @@ namespace game::levels {
         const game::math::Dimension    width,
         const game::math::Dimension    height
     )
-        : width(width)
+        : tiles(static_cast<size_t>(width * height))
+        , width(width)
         , height(height)
-        , tiles(static_cast<size_t>(width * height))
     {}
 };

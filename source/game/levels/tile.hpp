@@ -7,6 +7,7 @@ namespace game::levels {
 
     class Tile {
         public:
-            SectionId sectionId;
+            game::math::Dimension   height      = rand() % 3;
+            SectionId               sectionId;
     };
 }

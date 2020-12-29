@@ -8,6 +8,8 @@
 #include <vector>
 
 namespace game::levels {
+    class Level;
+
     class LevelSection {
         public:
             const game::math::Dimension             id;
@@ -30,5 +32,16 @@ namespace game::levels {
                                                     );
 
             bool                                    isTerminal() const;
+
+            void                                    writeSectionIds(
+                                                        Level&                                                level
+                                                    ) const;
+
+        private:
+            void                                    writeSectionIds(
+                                                        Level&                                                level,
+                                                        const game::math::Dimension                           xOffset,
+                                                        const game::math::Dimension                           yOffset
+                                                    ) const;
     };
 }

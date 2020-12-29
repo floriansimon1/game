@@ -1,11 +1,11 @@
 [settings]
 os=Linux
 arch=x86_64
-compiler=clang
+compiler=gcc
 os_build=Linux
 build_type=Debug
 arch_build=x86_64
-compiler.version=11
+compiler.version=10
 compiler.libcxx=libstdc++11
 
 [options]

@@ -11,11 +11,11 @@
             "program": "${workspaceFolder}/generated/source/game/game",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/generated/output",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb",
-            "miDebuggerPath": "lldb",
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
