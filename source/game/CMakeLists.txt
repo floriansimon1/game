@@ -6,6 +6,8 @@ add_subdirectory(ecs)
 add_subdirectory(levels)
 add_subdirectory(rendering)
 
+add_subdirectory(scenes)
+
 find_package(sfml MODULE REQUIRED)
 find_package(glad MODULE REQUIRED)
 
@@ -19,6 +21,7 @@ target_link_libraries(game
         game::data
         game::base
         game::math
+        game::scenes
         game::levels
         game::rendering
 

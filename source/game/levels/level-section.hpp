@@ -3,13 +3,13 @@
 #include <game/math/sequence-generator.hpp>
 #include <game/math/dimensions.hpp>
 
+#include <game/levels/level.hpp>
+
 #include <cstdint>
 #include <memory>
 #include <vector>
 
 namespace game::levels {
-    class Level;
-
     class LevelSection {
         public:
             const game::math::Dimension             id;
@@ -33,9 +33,7 @@ namespace game::levels {
 
             bool                                    isTerminal() const;
 
-            void                                    writeSectionIds(
-                                                        Level&                                                level
-                                                    ) const;
+            Level                                   toLevel() const;
 
         private:
             void                                    writeSectionIds(

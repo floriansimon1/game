@@ -3,7 +3,7 @@ function(enable_all_warnings_globally)
 endfunction()
 
 function(enable_cxx_20_globally)
-    add_compile_options(-stdlib=libc++ -std=c++20)
+    add_compile_options(-std=c++20 -fcoroutines)
 
     set_property(GLOBAL
         PROPERTY
@@ -16,5 +16,5 @@ function(enable_namespaced_local_includes_globally)
 endfunction()
 
 function(add_debug_symbols)
-    add_compile_options(-g)
+    add_compile_options(-g -O0)
 endfunction()

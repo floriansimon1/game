@@ -4,22 +4,17 @@
             "name": "Linux",
             "cStandard": "c11",
             "cppStandard": "c++20",
-            "intelliSenseMode": "clang-x64",
-            "compilerPath": "/usr/bin/clang++-11",
-            "defines": [
-                "GAME_LOG_PLAINS_GENERATION=true"
-            ],
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/g++-10",
             "includePath": [
                 "${workspaceFolder}/source/**",
-                "/home/florian/.conan/data/sfml/2.5.1/bincrafters/stable/package/ecb564c66b02bb28087b724f664cbc3cb87c62c7/include/**",
-                "/home/florian/.conan/data/coro/20201021/florian/game/package/aae852285c9e0463cdede70384b728be090a2702/include/**",
+                "/home/florian/.conan/data/sfml/2.5.1/bincrafters/stable/package/5fcbbf7899412c7de0f4dc642726af721eb1aa64/include/**",
+                "/home/florian/.conan/data/coro/20201021/florian/game/package/bd57d5c75f1acb12be0420dd8052398d7a88dbf6/include/**",
                 "/home/florian/.conan/data/glad/1.0/florian/game/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include/**",
                 "/home/florian/.conan/data/range-v3/0.10.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include/**",
                 "/home/florian/.conan/data/glm/0.9.9.8/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include/**"
             ],
-            "compilerArgs": [
-                "-stdlib=libc++"
-            ]
+            "compilerArgs": []
         }
     ],
     "version": 4

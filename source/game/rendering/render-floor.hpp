@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <memory>
 
 namespace game::ecs {
@@ -7,10 +8,9 @@ namespace game::ecs {
 }
 
 namespace game::rendering {
-    class Camera;
-
     void
     renderFloor(
-        game::ecs::Scene& scene
+        game::ecs::Scene&               scene,
+        const std::chrono::milliseconds 
     );
 }

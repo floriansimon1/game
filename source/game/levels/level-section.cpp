@@ -1,9 +1,5 @@
 #include <game/levels/level-section.hpp>
 
-#include <game/levels/level.hpp>
-
-#include <iostream>
-
 namespace game::levels {
     LevelSection::LevelSection(
         const game::math::Dimension                           width,
@@ -41,7 +37,6 @@ namespace game::levels {
         return this->subsection1 == nullptr;
     }
 
-
     void
     LevelSection::writeSectionIds(
         Level&                                                level,
@@ -51,7 +46,7 @@ namespace game::levels {
         if (this->isTerminal()) {
             for (game::math::Dimension x = xOffset; x < xOffset + this->width; x++) {
                 for (game::math::Dimension y = yOffset; y < yOffset + this->height; y++) {
-                    level.getWriteableTile(x, y).sectionId = this->id;
+                    level.getWriteableTile(x, y)->sectionId = this->id;
                 }
             }
         } else {
@@ -65,10 +60,12 @@ namespace game::levels {
         }
     }
 
-    void
-    LevelSection::writeSectionIds(
-        Level& level
-    ) const {
+    Level
+    LevelSection::toLevel() const {
+        Level level(this->width, this->height);
+
         this->writeSectionIds(level, 0u, 0u);
+
+        return level;
     }
 }

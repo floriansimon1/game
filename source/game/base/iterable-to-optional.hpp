@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <type_traits>
 
 namespace game::base {
     class ToOptionalRangeConverter {
@@ -22,7 +21,5 @@ namespace game::base {
     };
 
     ToOptionalRangeConverter
-    toOptional() {
-        return {};
-    }
+    toOptional();
 }

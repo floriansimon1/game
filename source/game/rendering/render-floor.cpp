@@ -1,50 +1,59 @@
+#include <game/rendering/shaders/forced-vertex-color-fragment-shader.hpp>
+
+#include <game/rendering/rendering-assets-vault.hpp>
+#include <game/rendering/unit-square.hpp>
 #include <game/rendering/camera.hpp>
 
-namespace game::rendering {
-    void
-    renderFloor(game::ecs::Scene& scene) {
-        const auto projectionViewMatrix = getFirstCameraProjectionViewMatrix(scene);
+#include <game/levels/tile.hpp>
+#include <game/levels/level.hpp>
 
-        if (!projectionViewMatrix) {
+#include <game/ecs/scene.hpp>
+
+#include <range/v3/view/iota.hpp>
+#include <range/v3/view/take.hpp>
+#include <range/v3/view/transform.hpp>
+
+namespace game::rendering {
+    // Matrix calculations in here are easily memoized.
+    static void
+    renderFloorTile(
+        const game::levels::LevelComponent& level,
+        const game::levels::Tile&           tile,
+        const glm::mat4&                    projectionViewMatrix,
+        Mesh&                               mesh
+    ) {
+        const auto translatedX = static_cast<float>(tile.x) - static_cast<float>(level.width) / 2.f;
+        const auto translatedY = static_cast<float>(tile.y) - static_cast<float>(level.height) / 2.f;
+
+        // Translate the square to its top left corner.
+        const auto topLeftCornerMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.5f));
+
+        const auto tileHeight  = static_cast<float>(tile.height);
+
+        // Then translate it to its real position.
+        const auto modelMatrix = glm::translate(topLeftCornerMatrix, glm::vec3(translatedX, tileHeight, translatedY));
+
+        game::rendering::setForcedVertexColorShader(mesh.bindShader(), tile.color);
+
+        mesh.draw(projectionViewMatrix, modelMatrix);
+    }
+
+    void
+    renderFloor(
+        game::ecs::Scene&               scene,
+        const std::chrono::milliseconds
+    ) {
+        const auto projectionViewMatrix = getFirstCameraProjectionViewMatrix(scene);
+        const auto levelComponent       = scene.getFirstComponent<game::levels::LevelComponent>();
+
+        const auto unitSquareMesh       = game::rendering::findMeshInFirstRenderingAssetsVault(scene, UnitSquare::meshName);
+
+        if (!projectionViewMatrix || !unitSquareMesh || !levelComponent) {
             return;
         }
 
-        // | ranges::views::for_each([&cameraComponent] (const auto [entity, component]) {
-        //     cameraComponent = component;
-        //     cameraEntity    = entity;
-        // });
-
-        // if (cameraEntity == nullptr) {
-        //     return;
-        // }
-
-        // cameraEntity
-        // ->findComponent<game::ecs::Transform>();
-        // | ranges::views::take(1)
-        // | ranges::views::
-
-        //     return entity
-        //     ->findComponent<game::ecs::Transform>();
-        //     | ranges::views::take(1)
-        //     | ranges::veiws::transform([&entity, &cameraComponent] (conat auto transformComponent) {
-        //         return std::make_tuple(entity, cameraComponent, transformComponent);
-        //     });
-        // });
-
-        // glm::mat4 projectionViewMatrix;
-        // bool        activeCameraFound = this->activeCamera->getProjectionViewMatrix();
-
-
-        // for (const auto& entity: scene.entities) {
-        //     for (const auto& component: entity->components) {
-        //         const auto renderable = std::dynamic_pointer_cast<Renderable>(component);
-
-        //         if (renderable == nullptr) {
-        //             continue;
-        //         }
-
-        //         renderable->render(projectionViewMatrix);
-        //     }
-        // }
+        for (const auto& [entity, tile]: scene.findEntitiesWithComponent<game::levels::Tile>()) {
+            renderFloorTile(**levelComponent, *tile, *projectionViewMatrix, *unitSquareMesh);
+        }
     }
 }

@@ -14,13 +14,25 @@ add_library(rendering OBJECT
     render-floor.cpp
     render-floor.hpp
 
-    render-object.cpp
-    render-object.hpp
+    mesh.hpp
+    mesh.cpp
 
-    floor-tile.hpp
+    rendering-assets-vault.cpp
+    rendering-assets-vault.hpp
+
+    managed-opengl-resource.cpp
+    managed-opengl-resource.hpp
+
+    level-coloration.hpp
+    level-coloration.cpp
+
+    unit-square.hpp
 
     colors.hpp
     colors.cpp
+
+    shader-binding.cpp
+    shader-binding.hpp
 
     shaders/forced-vertex-color-fragment-shader.cpp
     shaders/forced-vertex-color-fragment-shader.hpp
@@ -28,14 +40,13 @@ add_library(rendering OBJECT
 
 target_link_libraries(rendering
     PRIVATE
-        glad::glad
-        
         game::ecs
         game::math
         game::data
-
+    
     PUBLIC
         glm::glm
+        glad::glad
         range-v3::range-v3
 )
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <game/rendering/shader-binding.hpp>
+
 #include <SFML/Graphics/Color.hpp>
 
 #include <memory>
@@ -10,7 +12,11 @@ namespace sf {
 
 namespace game::rendering {
     std::unique_ptr<sf::Shader>
-    getForcedVertexColorShader(
-        const sf::Color forcedColor
+    getForcedVertexColorShader();
+
+    void
+    setForcedVertexColorShader(
+        ShaderBinding       binding,
+        const sf::Color&    forcedColor
     );
 }

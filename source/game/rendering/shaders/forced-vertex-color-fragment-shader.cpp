@@ -6,9 +6,7 @@
 
 namespace game::rendering {
     std::unique_ptr<sf::Shader>
-    getForcedVertexColorShader(
-        const sf::Color forcedColor
-    ) {
+    getForcedVertexColorShader() {
         auto shader = std::make_unique<sf::Shader>();
 
         shader->loadFromFile(
@@ -16,12 +14,14 @@ namespace game::rendering {
             game::data::Paths::shadersRoot + "forced-vertex-color-fragment-shader.frag"
         );
 
-        sf::Shader::bind(shader.get());
-
-        shader->setUniform("forcedVertexColor", sf::Glsl::Vec4(forcedColor));
-
-        sf::Shader::bind(nullptr);
-
         return shader;
+    }
+
+    void
+    setForcedVertexColorShader(
+        ShaderBinding       binding,
+        const sf::Color&    forcedColor
+    ) {
+        binding.shader.setUniform("forcedVertexColor", sf::Glsl::Vec4(forcedColor));
     }
 }

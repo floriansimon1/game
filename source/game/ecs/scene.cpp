@@ -1,35 +1,32 @@
 #include <game/ecs/scene.hpp>
 
 namespace game::ecs {
-    // Scene::Scene(
-    //     const Camera& camera
-    // )
-    // : camera(camera)
-    // , lastRenderedFrameTime(std::chrono::system_clock::now()) {}
+    Scene::Scene(
+        Scene&& scene
+    )
+    : entities(std::move(scene.entities))
+    {}
 
-    // std::chrono::milliseconds
-    // Scene::update() {
-    //     const auto frameTime = std::chrono::system_clock::now();
+    void
+    Scene::process(
+        std::chrono::milliseconds Δt
+    ) {
+        for (auto& system: this->systems) {
+            system(*this, Δt);
+        }
+    }
 
-    //     const auto Δt        = std::chrono::duration_cast<std::chrono::milliseconds>(frameTime - lastRenderedFrameTime);
+    void
+    Scene::addEntity(
+        std::shared_ptr<Entity>   entity
+    ) {
+        this->entities.emplace_back(entity);
+    }
 
-    //     this->camera.animate(Δt);
-
-    //     for (const auto& renderObject: this->renderObjects) {
-    //         renderObject->animate(Δt);
-    //     }
-
-    //     lastRenderedFrameTime = frameTime;
-
-    //     return Δt;
-    // }
-
-    // void
-    // Scene::render() {
-    //     const auto projectionViewMatrix = this->camera.getProjectionViewMatrix();
-
-    //     for (const auto& renderObject: this->renderObjects) {
-    //         renderObject->draw(projectionViewMatrix);
-    //     }
-    // }
+    void
+    Scene::addSystem(
+        System                    system
+    ) {
+        this->systems.emplace_back(system);
+    }
 }

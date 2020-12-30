@@ -10,12 +10,6 @@ namespace game::levels {
         const game::math::Dimension                         height,
         game::math::random::ReproducibleDimensionGenerator& randomGenerator
     ) {
-        Level level(width, height);
-
-        const auto section = generateSections(width, height, randomGenerator);
-
-        section.writeSectionIds(level);
-
-        return level;
+        return generateSections(width, height, randomGenerator).toLevel();
     }
 }

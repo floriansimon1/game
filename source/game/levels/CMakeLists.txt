@@ -8,6 +8,7 @@ add_library(levels OBJECT
     level-section.hpp
     level-section.cpp
 
+    tile.cpp
     tile.hpp
 
     level.hpp

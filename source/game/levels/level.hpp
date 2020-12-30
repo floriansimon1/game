@@ -1,39 +1,51 @@
 #pragma once
 
+#include <game/base/non-copyable.hpp>
+
 #include <game/math/dimensions.hpp>
 
 #include <game/levels/tile.hpp>
 
 #include <vector>
-
-int main(int, char**);
+#include <memory>
 
 namespace game::levels {
-    class Level {
+    class Level: private game::base::NonCopyable {
         private:
-            std::vector<Tile>                  tiles;
+            std::vector<std::shared_ptr<Tile>> tiles;
 
             game::math::Dimension
             getOffset(
-                const game::math::Dimension   x,
-                const game::math::Dimension   y
+                const game::math::Dimension    x,
+                const game::math::Dimension    y
             ) const;
 
         public:
-            const game::math::Dimension        width;
-            const game::math::Dimension        height;
+            const game::math::Dimension         width;
+            const game::math::Dimension         height;
 
             Level(
-                const game::math::Dimension    width,
-                const game::math::Dimension    height
+                const game::math::Dimension     width,
+                const game::math::Dimension     height
             );
 
-            Tile&
+            Level(
+                Level&&                         level
+            );
+
+            std::shared_ptr<Tile>
             getWriteableTile(
-                const game::math::Dimension   x,
-                const game::math::Dimension   y
+                const game::math::Dimension     x,
+                const game::math::Dimension     y
             );
 
-            friend int ::main(int, char**);
+            SectionId
+            getMaximumSectionId() const;
+    };
+
+    class LevelComponent: public game::ecs::Component {
+        public:
+            game::math::Dimension width;
+            game::math::Dimension height;
     };
 }
