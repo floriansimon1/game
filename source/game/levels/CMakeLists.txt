@@ -1,4 +1,7 @@
 add_library(levels OBJECT
+    relief-generator.hpp
+    relief-generator.cpp
+
     sections-generator.hpp
     sections-generator.cpp
 

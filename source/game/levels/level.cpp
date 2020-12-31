@@ -52,4 +52,9 @@ namespace game::levels {
 
         return maximumElement->sectionId;
     }
+
+    std::ranges::ref_view<decltype(Level::tiles)>
+    Level::getTilesView() {
+        return this->tiles;
+    }
 }

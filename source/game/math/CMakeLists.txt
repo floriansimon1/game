@@ -3,6 +3,9 @@ find_package(sfml MODULE REQUIRED)
 add_library(math OBJECT
     dimensions.hpp
 
+    direction.cpp
+    direction.hpp
+
     random.hpp
     random.implementation.hpp
 

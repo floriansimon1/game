@@ -8,16 +8,17 @@
 
 #include <vector>
 #include <memory>
+#include <ranges>
 
 namespace game::levels {
     class Level: private game::base::NonCopyable {
         private:
-            std::vector<std::shared_ptr<Tile>> tiles;
+            std::vector<std::shared_ptr<Tile>>  tiles;
 
             game::math::Dimension
             getOffset(
-                const game::math::Dimension    x,
-                const game::math::Dimension    y
+                const game::math::Dimension     x,
+                const game::math::Dimension     y
             ) const;
 
         public:
@@ -41,6 +42,9 @@ namespace game::levels {
 
             SectionId
             getMaximumSectionId() const;
+
+            std::ranges::ref_view<decltype(tiles)>
+            getTilesView();
     };
 
     class LevelComponent: public game::ecs::Component {

@@ -1,6 +1,7 @@
 #include <game/math/sequence-generator.hpp>
 
 #include <game/levels/sections-generator.hpp>
+#include <game/levels/relief-generator.hpp>
 #include <game/levels/level-generator.hpp>
 
 namespace game::levels {
@@ -10,6 +11,10 @@ namespace game::levels {
         const game::math::Dimension                         height,
         game::math::random::ReproducibleDimensionGenerator& randomGenerator
     ) {
-        return generateSections(width, height, randomGenerator).toLevel();
+        auto level = generateSections(width, height, randomGenerator).toLevel();
+
+        addRelief(level, randomGenerator);
+
+        return level;
     }
 }
