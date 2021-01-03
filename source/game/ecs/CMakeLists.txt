@@ -6,14 +6,14 @@ add_library(ecs OBJECT
     component.hpp
     system.hpp
 
-    scene.hpp
     scene.cpp
+    scene.hpp
 
-    entity.hpp
     entity.cpp
+    entity.hpp
 
-    transform.hpp
     transform.cpp
+    transform.hpp
 
     spin.hpp
     spin.cpp

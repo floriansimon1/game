@@ -9,9 +9,9 @@
 
 #include <game/ecs/scene.hpp>
 
-#include <range/v3/view/iota.hpp>
-#include <range/v3/view/take.hpp>
-#include <range/v3/view/transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
+
+#include <iostream>
 
 namespace game::rendering {
     // Matrix calculations in here are easily memoized.
@@ -43,17 +43,19 @@ namespace game::rendering {
         game::ecs::Scene&               scene,
         const std::chrono::milliseconds
     ) {
-        const auto projectionViewMatrix = getFirstCameraProjectionViewMatrix(scene);
+        const auto cameraState          = computeFirstCameraState(scene);
         const auto levelComponent       = scene.getFirstComponent<game::levels::LevelComponent>();
 
         const auto unitSquareMesh       = game::rendering::findMeshInFirstRenderingAssetsVault(scene, UnitSquare::meshName);
 
-        if (!projectionViewMatrix || !unitSquareMesh || !levelComponent) {
+        if (!cameraState.has_value() || !unitSquareMesh.has_value() || !levelComponent.has_value()) {
             return;
         }
 
+        const auto projectionViewMatrix = cameraState.value().getProjectionViewMatrix();
+
         for (const auto& [entity, tile]: scene.findEntitiesWithComponent<game::levels::Tile>()) {
-            renderFloorTile(**levelComponent, *tile, *projectionViewMatrix, *unitSquareMesh);
+            renderFloorTile(**levelComponent, *tile, projectionViewMatrix, *unitSquareMesh);
         }
     }
 }

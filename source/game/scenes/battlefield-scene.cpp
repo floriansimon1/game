@@ -15,6 +15,9 @@
 
 #include <game/levels/level-generator.hpp>
 
+#include <glm/gtx/transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
+
 #include <memory>
 
 namespace game::scenes {
@@ -22,15 +25,13 @@ namespace game::scenes {
     makeCameraEntity(
         const float aspectRatio
     ) {
-        return game::ecs::Entity::make({
-            std::make_shared<game::ecs::Transform>(
-                glm::lookAt(
-                    glm::vec3(0.0f, 30.0f, 30.0f), 
-                    glm::vec3(0.0f,  0.0f,  0.0f), 
-                    glm::vec3(0.0f,  1.0f,  0.0f)
-                )
-            ),
+        auto transform = std::make_shared<game::ecs::Transform>();
 
+        transform->orientation = glm::eulerAngleX(glm::radians(45.f));
+        transform->position    = glm::vec3(0.0f, -30.0f, -30.0f);
+
+        return game::ecs::Entity::make({
+            transform,
             std::make_shared<game::ecs::Spinning>(0.1f, glm::vec3(0.f, 1.f, 0.f)),
             std::make_shared<game::rendering::Camera>(aspectRatio)
         });

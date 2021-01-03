@@ -1,10 +1,12 @@
 #pragma once
 
 #include <game/ecs/component.hpp>
+#include <game/ecs/transform.hpp>
 
 #include <glm/gtc/type_ptr.hpp>
 
 #include <optional>
+#include <memory>
 
 namespace game::ecs {
     class Scene;
@@ -20,7 +22,16 @@ namespace game::rendering {
 
             glm::mat4 projection;
     };
-    
-    std::optional<glm::mat4>
-    getFirstCameraProjectionViewMatrix(game::ecs::Scene& scene);
+
+    class CameraState {
+        public:
+            game::ecs::Transform&   transform;
+            Camera&                 camera;
+
+            glm::mat4
+            getProjectionViewMatrix() const;
+    };
+
+    std::optional<CameraState>
+    computeFirstCameraState(game::ecs::Scene& scene);
 }
