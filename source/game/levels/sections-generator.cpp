@@ -16,7 +16,7 @@ computeSectionTerminalityProbability(
         return 0.0;
     }
 
-    return std::min(1.0, static_cast<double>(parentSubdivisionsCount) * 0.05f);
+    return std::min(1.0, static_cast<double>(parentSubdivisionsCount) * 0.5f);
 }
 
 namespace game::levels {

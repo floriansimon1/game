@@ -13,6 +13,6 @@ namespace game::ecs {
             glm::mat4 orientation = glm::eulerAngleX(0.0f);
 
             glm::mat4
-            getModelMatrix() const;
+            getMatrix() const;
     };
 }

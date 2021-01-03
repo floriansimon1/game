@@ -8,12 +8,12 @@ namespace game::rendering {
     Camera::Camera(
         const float aspectRatio
     )
-    : projection(glm::perspective(glm::radians(50.0f), aspectRatio, 0.1f, 100.0f))
+    : projection(glm::perspective(glm::radians(50.0f), aspectRatio, 0.1f, 200.0f))
     {}
 
     glm::mat4
     CameraState::getProjectionViewMatrix() const {
-        return this->camera.projection * this->transform.getModelMatrix();
+        return this->camera.projection * glm::inverse(this->transform.getMatrix());
     }
 
     std::optional<CameraState>

@@ -4,10 +4,6 @@
 
 #include <game/base/iterable-to-optional.hpp>
 
-#include <range/v3/view/map.hpp>
-#include <range/v3/view/for_each.hpp>
-#include <range/v3/view/transform.hpp>
-
 namespace game::rendering {
     class Mesh;
 

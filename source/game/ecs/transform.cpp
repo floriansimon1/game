@@ -4,7 +4,7 @@
 
 namespace game::ecs {
     glm::mat4
-    Transform::getModelMatrix() const {
-        return this->orientation * glm::translate(this->position);
+    Transform::getMatrix() const {
+        return glm::translate(this->position) * this->orientation;
     }
 }

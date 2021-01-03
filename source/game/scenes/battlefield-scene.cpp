@@ -2,8 +2,8 @@
 
 #include <game/math/random.hpp>
 
-#include <game/ecs/spin.hpp>
 #include <game/ecs/transform.hpp>
+#include <game/ecs/rotate-around.hpp>
 
 #include <game/rendering/mesh.hpp>
 #include <game/rendering/camera.hpp>
@@ -25,14 +25,14 @@ namespace game::scenes {
     makeCameraEntity(
         const float aspectRatio
     ) {
-        auto transform = std::make_shared<game::ecs::Transform>();
+        auto height    = 10.f;
+        auto amplitude = 40.f;
 
-        transform->orientation = glm::eulerAngleX(glm::radians(45.f));
-        transform->position    = glm::vec3(0.0f, -30.0f, -30.0f);
+        auto transform = std::make_shared<game::ecs::Transform>();
 
         return game::ecs::Entity::make({
             transform,
-            std::make_shared<game::ecs::Spinning>(0.1f, glm::vec3(0.f, 1.f, 0.f)),
+            std::make_shared<game::ecs::RotateAround>(0.1f * 0.1f, height, glm::vec3(0.f, 0.f, 0.f), amplitude),
             std::make_shared<game::rendering::Camera>(aspectRatio)
         });
     }
@@ -95,7 +95,7 @@ namespace game::scenes {
         addTileEntities(level, scene);
 
         scene.addEntity(loadAssets());
-        scene.addSystem(game::ecs::spin);
+        scene.addSystem(game::ecs::rotateAround);
 
         scene.addSystem(game::rendering::renderFloor);
 

@@ -15,8 +15,8 @@ add_library(ecs OBJECT
     transform.cpp
     transform.hpp
 
-    spin.hpp
-    spin.cpp
+    rotate-around.hpp
+    rotate-around.cpp
 )
 
 target_link_libraries(ecs
