@@ -1,8 +1,12 @@
-#include <game/rendering/shaders/forced-vertex-color-fragment-shader.hpp>
+#include <game/rendering/render-floor.hpp>
+
+#include <game/rendering/shaders/standard-textured-surface.hpp>
 
 #include <game/rendering/rendering-assets-vault.hpp>
 #include <game/rendering/unit-square.hpp>
 #include <game/rendering/camera.hpp>
+
+#include <game/data/textures.hpp>
 
 #include <game/levels/tile.hpp>
 #include <game/levels/level.hpp>
@@ -20,7 +24,8 @@ namespace game::rendering {
         const game::levels::LevelComponent& level,
         const game::levels::Tile&           tile,
         const glm::mat4&                    projectionViewMatrix,
-        Mesh&                               mesh
+        Mesh&                               mesh,
+        const sf::Texture&                  grassTexture
     ) {
         const auto translatedX = static_cast<float>(tile.x) - static_cast<float>(level.width) / 2.f;
         const auto translatedY = static_cast<float>(tile.y) - static_cast<float>(level.height) / 2.f;
@@ -33,7 +38,7 @@ namespace game::rendering {
         // Then translate it to its real position.
         const auto modelMatrix = glm::translate(topLeftCornerMatrix, glm::vec3(translatedX, tileHeight, translatedY));
 
-        game::rendering::setForcedVertexColorShader(mesh.bindShader(), tile.color);
+        game::rendering::setTextureForStandardTexturedShader(mesh.bindShader(), grassTexture);
 
         mesh.draw(projectionViewMatrix, modelMatrix);
     }
@@ -43,19 +48,25 @@ namespace game::rendering {
         game::ecs::Scene&               scene,
         const std::chrono::milliseconds
     ) {
-        const auto cameraState          = computeFirstCameraState(scene);
-        const auto levelComponent       = scene.getFirstComponent<game::levels::LevelComponent>();
+        const auto cameraState    = computeFirstCameraState(scene);
+        const auto assetsVault    = scene.getFirstComponent<RenderingAssetsVault>();
+        const auto levelComponent = scene.getFirstComponent<game::levels::LevelComponent>();
 
-        const auto unitSquareMesh       = game::rendering::findMeshInFirstRenderingAssetsVault(scene, UnitSquare::meshName);
+        if (!cameraState.has_value() || !assetsVault.has_value() || !levelComponent.has_value()) {
+            return;
+        }
 
-        if (!cameraState.has_value() || !unitSquareMesh.has_value() || !levelComponent.has_value()) {
+        const auto unitSquareMeshIterator = assetsVault.value()->meshes.find(UnitSquare::meshName);
+        const auto grassTextureIterator   = assetsVault.value()->textures.find(game::data::Textures::grassTextureName);
+
+        if (unitSquareMeshIterator == assetsVault.value()->meshes.end() || grassTextureIterator == assetsVault.value()->textures.end()) {
             return;
         }
 
         const auto projectionViewMatrix = cameraState.value().getProjectionViewMatrix();
 
         for (const auto& [entity, tile]: scene.findEntitiesWithComponent<game::levels::Tile>()) {
-            renderFloorTile(**levelComponent, *tile, projectionViewMatrix, *unitSquareMesh);
+            renderFloorTile(**levelComponent, *tile, projectionViewMatrix, unitSquareMeshIterator->second, grassTextureIterator->second);
         }
     }
 }

@@ -55,8 +55,8 @@ namespace game::rendering {
 
     void
     Mesh::draw(
-        const glm::mat4& projectionView,
-        const glm::mat4& transform
+        const glm::mat4&   projectionView,
+        const glm::mat4&   transform
     ) const {
         sf::Shader::bind(this->shader.get());
 

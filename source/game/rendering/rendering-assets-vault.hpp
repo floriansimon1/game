@@ -4,6 +4,8 @@
 
 #include <game/ecs/component.hpp>
 
+#include <SFML/Graphics/Texture.hpp>
+
 #include <map>
 #include <string>
 #include <optional>
@@ -17,7 +19,8 @@ namespace game::rendering {
 
     class RenderingAssetsVault: public game::ecs::Component {
         public:
-            std::map<std::string, Mesh> meshes;
+            std::map<std::string, Mesh>        meshes;
+            std::map<std::string, sf::Texture> textures;
     };
 
     std::optional<std::reference_wrapper<Mesh>>

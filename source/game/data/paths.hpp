@@ -5,7 +5,7 @@
 namespace game::data {
     class Paths {
         public:
-            static const std::string assetsRoot;
+            static const std::string texturesRoot;
             static const std::string shadersRoot;
     };
 }

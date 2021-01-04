@@ -2,6 +2,8 @@
 
 #include <game/math/random.hpp>
 
+#include <game/data/textures.hpp>
+
 #include <game/ecs/transform.hpp>
 #include <game/ecs/rotate-around.hpp>
 
@@ -11,7 +13,7 @@
 #include <game/rendering/render-floor.hpp>
 #include <game/rendering/level-coloration.hpp>
 #include <game/rendering/rendering-assets-vault.hpp>
-#include <game/rendering/shaders/forced-vertex-color-fragment-shader.hpp>
+#include <game/rendering/shaders/standard-textured-surface.hpp>
 
 #include <game/levels/level-generator.hpp>
 
@@ -32,7 +34,7 @@ namespace game::scenes {
 
         return game::ecs::Entity::make({
             transform,
-            std::make_shared<game::ecs::RotateAround>(0.1f * 0.1f, height, glm::vec3(0.f, 0.f, 0.f), amplitude),
+            std::make_shared<game::ecs::RotateAround>(0.1f, height, glm::vec3(0.f, 0.f, 0.f), amplitude),
             std::make_shared<game::rendering::Camera>(aspectRatio)
         });
     }
@@ -59,8 +61,13 @@ namespace game::scenes {
             game::rendering::Mesh(
                 game::rendering::UnitSquare::vertices,
                 game::rendering::UnitSquare::vertexIndices,
-                game::rendering::getForcedVertexColorShader()
+                game::rendering::getStandardTexturedSurfaceShader()
             )
+        });
+
+        vault->textures.insert({
+            game::data::Textures::grassTextureName,
+            *game::data::Textures::getGrassTexture()
         });
 
         return game::ecs::Entity::make(vault);

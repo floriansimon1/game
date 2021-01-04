@@ -7,3 +7,7 @@ endfunction()
 function(target_set_runtime_shader_location_define TARGET)
     target_compile_definitions(${TARGET} PRIVATE -DSHADERS_RELATIVE_DIRECTORY_MACRO="shaders/glsl/")
 endfunction()
+
+function(target_set_runtime_textures_location_define TARGET)
+    target_compile_definitions(${TARGET} PRIVATE -DTEXTURES_RELATIVE_DIRECTORY_MACRO="textures/")
+endfunction()

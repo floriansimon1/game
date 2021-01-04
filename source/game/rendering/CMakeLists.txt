@@ -36,6 +36,9 @@ add_library(rendering OBJECT
 
     shaders/forced-vertex-color-fragment-shader.cpp
     shaders/forced-vertex-color-fragment-shader.hpp
+
+    shaders/standard-textured-surface.cpp
+    shaders/standard-textured-surface.hpp
 )
 
 target_link_libraries(rendering
