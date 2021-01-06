@@ -15,6 +15,8 @@
 
 #include <glm/gtx/euler_angles.hpp>
 
+// TODO DEBUG
+#include <game/math/direction.hpp>
 #include <iostream>
 
 namespace game::rendering {
@@ -64,6 +66,8 @@ namespace game::rendering {
         }
 
         const auto projectionViewMatrix = cameraState.value().getProjectionViewMatrix();
+
+        std::cout << glm::degrees(cameraState.value().rotateAround.currentAngle) << ": " << game::math::cardinalDirectionToString(cameraState.value().rotateAround.getCardinalDirection()) << std::endl;
 
         for (const auto& [entity, tile]: scene.findEntitiesWithComponent<game::levels::Tile>()) {
             renderFloorTile(**levelComponent, *tile, projectionViewMatrix, unitSquareMeshIterator->second, grassTextureIterator->second);

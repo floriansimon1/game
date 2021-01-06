@@ -1,4 +1,6 @@
-    #include <game/ecs/rotate-around.hpp>
+#include <game/ecs/rotate-around.hpp>
+
+#include <game/math/constants.hpp>
 
 #include <game/ecs/scene.hpp>
 #include <game/ecs/transform.hpp>
@@ -21,18 +23,20 @@ namespace game::ecs {
     , circleAmplitude(circleAmplitude)
     {}
 
+    game::math::CardinalDirection
+    RotateAround::getCardinalDirection() const {
+        return game::math::trigonometricAngleToCardinalDirection(this->currentAngle);
+    }
+
     void
     rotateAround(
         Scene&                          scene,
         const std::chrono::milliseconds Δt
     ) {
-        constexpr float completePeriod = 2.f * static_cast<float>(M_PI);
-        constexpr float quarterPeriod  = static_cast<float>(M_PI) / 2.f;
-
         for (const auto [entity, transformComponent, rotateAroundComponent]: scene.findEntitiesWithComponents<Transform, RotateAround>()) {
-            const auto Δangle = rotateAroundComponent->speed * completePeriod * (static_cast<float>(Δt.count()) / 1000.f);
+            const auto Δangle = rotateAroundComponent->speed * game::math::completePeriod * (static_cast<float>(Δt.count()) / 1000.f);
 
-            rotateAroundComponent->currentAngle = fmod(rotateAroundComponent->currentAngle + Δangle, completePeriod);
+            rotateAroundComponent->currentAngle = fmod(rotateAroundComponent->currentAngle + Δangle, game::math::completePeriod);
 
             transformComponent->position = rotateAroundComponent->circleAmplitude * glm::vec3(
                 cos(rotateAroundComponent->currentAngle),
@@ -48,7 +52,7 @@ namespace game::ecs {
             const auto lookDownAxis         = glm::cross(directionVector, glm::vec3(0, -1.f, 0.f));
             const auto lookDownAngle        = acosf(rotateAroundComponent->circleAmplitude / lookDownRayLength);
 
-            transformComponent->orientation = glm::axisAngleMatrix(lookDownAxis, lookDownAngle) * glm::eulerAngleY(rotateAroundComponent->currentAngle + quarterPeriod);
+            transformComponent->orientation = glm::axisAngleMatrix(lookDownAxis, lookDownAngle) * glm::eulerAngleY(rotateAroundComponent->currentAngle + game::math::quarterPeriod);
         }
     }
 }

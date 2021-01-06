@@ -1,5 +1,5 @@
 function(enable_all_warnings_globally)
-    add_compile_options(-Wall -Wextra -pedantic)
+    add_compile_options(-Wall -Wextra -pedantic -Wswitch -Werror)
 endfunction()
 
 function(enable_cxx_20_globally)

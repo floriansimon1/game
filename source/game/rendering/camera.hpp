@@ -1,5 +1,6 @@
 #pragma once
 
+#include <game/ecs/rotate-around.hpp>
 #include <game/ecs/component.hpp>
 #include <game/ecs/transform.hpp>
 
@@ -25,6 +26,7 @@ namespace game::rendering {
 
     class CameraState {
         public:
+            game::ecs::RotateAround rotateAround;
             game::ecs::Transform&   transform;
             Camera&                 camera;
 

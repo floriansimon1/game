@@ -1,6 +1,47 @@
 #include <game/math/direction.hpp>
 
+#include <game/math/constants.hpp>
+
 namespace game::math {
+    CardinalDirection
+    trigonometricAngleToCardinalDirection(
+        const float angle
+    ) {
+        const float normalizedAngle = fmodf(angle + game::math::completePeriod, game::math::completePeriod);
+
+        const float isPureDirection = fmod(normalizedAngle, game::math::halfPeriod) == 0.f;
+
+        if (isPureDirection) {
+            return static_cast<CardinalDirection>(1 + static_cast<unsigned>(normalizedAngle / game::math::quarterPeriod));
+        }
+
+        const bool  north           = normalizedAngle < game::math::halfPeriod;
+        const bool  west            = normalizedAngle > game::math::quarterPeriod && normalizedAngle < game::math::halfPeriod + game::math::quarterPeriod;
+
+        return static_cast<CardinalDirection>(
+            static_cast<unsigned>(north ? CardinalDirection::north : CardinalDirection::south)
+            | static_cast<unsigned>(west ? CardinalDirection::west : CardinalDirection::east)
+        );
+    }
+
+    const char*
+    cardinalDirectionToString(
+        const CardinalDirection direction
+    ) {
+        switch (direction) {
+            case CardinalDirection::east:      return "east";
+            case CardinalDirection::west:      return "west";
+            case CardinalDirection::north:     return "north";
+            case CardinalDirection::south:     return "south";
+            case CardinalDirection::northEast: return "north east";
+            case CardinalDirection::southEast: return "south east";
+            case CardinalDirection::northWest: return "north west";
+            case CardinalDirection::southWest: return "south west";
+        }
+
+        return ""; // Silences warnings.
+    }
+
     static DimensionΔ
     get2dDimensionΔ(
         const Direction2d direction

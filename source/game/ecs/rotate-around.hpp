@@ -1,5 +1,7 @@
 #pragma once
 
+#include <game/math/direction.hpp>
+
 #include <game/ecs/component.hpp>
 
 #include <glm/vec3.hpp>
@@ -18,6 +20,9 @@ namespace game::ecs {
                 const glm::vec3   center,
                 const float       circleAmplitude
             );
+
+            game::math::CardinalDirection
+            getCardinalDirection() const;
 
             float                       speed;
             float                       height;

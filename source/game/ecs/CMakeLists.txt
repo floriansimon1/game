@@ -1,4 +1,5 @@
 find_package(glm      MODULE REQUIRED)
+find_package(sfml     MODULE REQUIRED)
 find_package(coro     MODULE REQUIRED)
 find_package(range-v3 MODULE REQUIRED)
 
@@ -22,6 +23,7 @@ add_library(ecs OBJECT
 target_link_libraries(ecs
     PUBLIC
         glm::glm
+        sfml::sfml
         coro::coro
         range-v3::range-v3
 )

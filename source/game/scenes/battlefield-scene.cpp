@@ -27,8 +27,8 @@ namespace game::scenes {
     makeCameraEntity(
         const float aspectRatio
     ) {
-        auto height    = 10.f;
-        auto amplitude = 40.f;
+        auto height    = 20.f;
+        auto amplitude = 30.f;
 
         auto transform = std::make_shared<game::ecs::Transform>();
 

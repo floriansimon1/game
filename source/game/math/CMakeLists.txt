@@ -1,6 +1,8 @@
 find_package(sfml MODULE REQUIRED)
 
 add_library(math OBJECT
+    constants.hpp
+
     dimensions.hpp
 
     direction.cpp

@@ -18,15 +18,16 @@ namespace game::rendering {
 
     std::optional<CameraState>
     computeFirstCameraState(game::ecs::Scene& scene) {
-        const auto rawCameraState = scene.findEntitiesWithComponents<game::ecs::Transform, Camera>() | game::base::toOptional();
+        const auto rawCameraState = scene.findEntitiesWithComponents<game::ecs::RotateAround, game::ecs::Transform, Camera>() | game::base::toOptional();
 
         if (rawCameraState == std::nullopt) {
             return std::nullopt;
         }
 
         return CameraState {
-            .transform  = *std::get<1>(rawCameraState.value()),
-            .camera     = *std::get<2>(rawCameraState.value())
+            .rotateAround = *std::get<1>(rawCameraState.value()),
+            .transform    = *std::get<2>(rawCameraState.value()),
+            .camera       = *std::get<3>(rawCameraState.value())
         };
     }
 }

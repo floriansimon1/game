@@ -7,6 +7,10 @@ namespace game::data {
 
         texture->loadFromFile(Paths::texturesRoot + "grass.jpg");
 
+        texture->generateMipmap();
+
+        texture->setSmooth(false);
+
         return texture;
     }
 }

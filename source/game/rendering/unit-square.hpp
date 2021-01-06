@@ -10,10 +10,10 @@ namespace game::rendering {
         public:
             static inline std::vector<GLfloat> vertices {
                 // Vertex              Texture
-                -0.5f, 0.0f, -0.5f,    1.0f, 0.0f, // Back left
-                +0.5f, 0.0f, -0.5f,    1.0f, 1.0f, // Back right
-                -0.5f, 0.0f, +0.5f,    0.0f, 0.0f, // Front left
-                +0.5f, 0.0f, +0.5f,    1.0f, 0.0f  // Front right
+                -0.5f, 0.f, -0.5f,    0.f, 1.f, // Back left
+                +0.5f, 0.f, -0.5f,    1.f, 1.f, // Back right
+                -0.5f, 0.f, +0.5f,    0.f, 0.f, // Front left
+                +0.5f, 0.f, +0.5f,    1.f, 0.f  // Front right
             };
 
             static inline constexpr GLuint      backLeft   = 0;
