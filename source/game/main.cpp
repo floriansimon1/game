@@ -2,7 +2,8 @@
 
 #include <glad/glad.h>
 
-#include <SFML/Window.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include <chrono>
 #include <thread>
@@ -16,7 +17,9 @@ main(
     const float height = 600.f;
     bool        stop   = false;
 
-    auto        window = sf::Window(sf::VideoMode(width, height), "My window");
+    sf::ContextSettings windowSettings(24);
+
+    auto window = sf::RenderWindow(sf::VideoMode(width, height), "My window", sf::Style::Resize | sf::Style::Close, windowSettings);
 
     if (!gladLoadGL()) {
         return EXIT_FAILURE;

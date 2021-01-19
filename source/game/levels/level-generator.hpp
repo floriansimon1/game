@@ -6,7 +6,7 @@
 #include <game/levels/level.hpp>
 
 namespace game::levels {
-    [[nodiscard]] Level
+    std::shared_ptr<Level>
     generateLevel(
         const game::math::Dimension                         width,
         const game::math::Dimension                         height,

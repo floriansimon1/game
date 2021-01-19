@@ -6,5 +6,7 @@ namespace game::levels {
 
 namespace game::rendering {
     void
-    colorizeLevel(game::levels::Level& level);
+    colorizeLevel(
+        game::levels::Level& level
+    );
 }

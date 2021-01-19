@@ -2,12 +2,14 @@
 
 #include <game/math/random.hpp>
 
+#include <memory>
+
 namespace game::levels {
     class Level;
 
     void
     addRelief(
-        Level&                                              level,
+        std::shared_ptr<Level>                              level,
         game::math::random::ReproducibleDimensionGenerator& randomGenerator
     );
 }

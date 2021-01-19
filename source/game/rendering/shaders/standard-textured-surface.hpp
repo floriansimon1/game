@@ -16,8 +16,15 @@ namespace game::rendering {
     getStandardTexturedSurfaceShader();
 
     void
+    unsetTextureForStandardTexturedShader(
+        ShaderBinding       binding
+    );
+
+    void
     setTextureForStandardTexturedShader(
         ShaderBinding       binding,
-        const sf::Texture&  texture
+        const sf::Texture&  texture,
+        const float         textureXScale,
+        const float         textureYScale
     );
 }

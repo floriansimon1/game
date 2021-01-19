@@ -6,7 +6,9 @@
 
 namespace game::rendering {
     void
-    colorizeLevel(game::levels::Level& level) {
+    colorizeLevel(
+        game::levels::Level& level
+    ) {
         const auto maxSectionId = level.getMaximumSectionId();
 
         const auto colors       = game::rendering::getDistinctColorsArray(maxSectionId + 1);

@@ -5,11 +5,18 @@ namespace game::data {
     Textures::getGrassTexture() {
         auto texture = std::make_unique<sf::Texture>();
 
-        texture->loadFromFile(Paths::texturesRoot + "grass.jpg");
+        texture->loadFromFile(Paths::texturesRoot + "grass.png");
 
-        texture->generateMipmap();
+        return texture;
+    }
 
-        texture->setSmooth(false);
+    std::unique_ptr<sf::Texture>
+    Textures::getDirtTexture() {
+        auto texture = std::make_unique<sf::Texture>();
+
+        texture->loadFromFile(Paths::texturesRoot + "dirt.png");
+
+        texture->setRepeated(true);
 
         return texture;
     }

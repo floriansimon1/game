@@ -70,19 +70,12 @@ namespace game::scenes {
             *game::data::Textures::getGrassTexture()
         });
 
+        vault->textures.insert({
+            game::data::Textures::dirtTextureName,
+            *game::data::Textures::getDirtTexture()
+        });
+
         return game::ecs::Entity::make(vault);
-    }
-
-    static std::shared_ptr<game::ecs::Entity>
-    getLevelEntity(
-        const game::levels::Level& level
-    ) {
-        auto levelComponent = std::make_shared<game::levels::LevelComponent>();
-        
-        levelComponent->width  = level.width;
-        levelComponent->height = level.height;
-
-        return game::ecs::Entity::make(levelComponent);
     }
 
     game::ecs::Scene
@@ -91,15 +84,15 @@ namespace game::scenes {
     ) {
         game::ecs::Scene scene;
 
-        auto                randomGenerator = game::math::random::ReproducibleDimensionGenerator(std::time(nullptr));
-        game::levels::Level level           = game::levels::generateLevel(32u, 32u, randomGenerator);
+        auto randomGenerator = game::math::random::ReproducibleDimensionGenerator(std::time(nullptr));
+        auto level           = game::levels::generateLevel(32u, 32u, randomGenerator);
 
-        game::rendering::colorizeLevel(level);
+        game::rendering::colorizeLevel(*level);
 
-        scene.addEntity(getLevelEntity(level));
+        scene.addEntity(game::ecs::Entity::make(level));
         scene.addEntity(makeCameraEntity(aspectRatio));
 
-        addTileEntities(level, scene);
+        addTileEntities(*level, scene);
 
         scene.addEntity(loadAssets());
         scene.addSystem(game::ecs::rotateAround);

@@ -18,10 +18,21 @@ namespace game::rendering {
     }
 
     void
+    unsetTextureForStandardTexturedShader(
+        ShaderBinding       binding
+    ) {
+        binding.shader.setUniform("disableTexture", true);
+    }
+
+    void
     setTextureForStandardTexturedShader(
         ShaderBinding       binding,
-        const sf::Texture&  texture
+        const sf::Texture&  texture,
+        const float         textureXScale,
+        const float         textureYScale
     ) {
-        binding.shader.setUniform("textureToMap", texture);
+        binding.shader.setUniform("disableTexture", false);
+        binding.shader.setUniform("textureToMap",   texture);
+        binding.shader.setUniform("textureScale",   sf::Vector2f(textureXScale, textureYScale));
     }
 }

@@ -22,6 +22,12 @@ namespace game::math {
         southEast = static_cast<ByteUnderlyingType>(CardinalDirection::south) | static_cast<ByteUnderlyingType>(CardinalDirection::east)
     };
 
+    bool
+    hasCardinalDirection(
+        const CardinalDirection fullDirection,
+        const CardinalDirection queriedDirection
+    );
+
     CardinalDirection
     trigonometricAngleToCardinalDirection(
         const float angle
@@ -38,6 +44,16 @@ namespace game::math {
         left  = 0b0010,
         right = 0b0001
     };
+
+    bool
+    isXDirection(
+        const Direction2d   direction
+    );
+
+    bool
+    isYDirection(
+        const Direction2d   direction
+    );
 
     std::optional<Dimension>
     incrementBounded2dX(

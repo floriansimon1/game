@@ -3,6 +3,16 @@
 #include <game/math/constants.hpp>
 
 namespace game::math {
+    bool
+    hasCardinalDirection(
+        const CardinalDirection fullDirection,
+        const CardinalDirection queriedDirection
+    ) {
+        using FlagType = std::underlying_type_t<CardinalDirection>;
+
+        return static_cast<FlagType>(fullDirection) & static_cast<FlagType>(queriedDirection);
+    }
+
     CardinalDirection
     trigonometricAngleToCardinalDirection(
         const float angle
@@ -49,14 +59,14 @@ namespace game::math {
         return direction == Direction2d::up || direction == Direction2d::left ? -1 : 1;
     }
 
-    static bool
+    bool
     isXDirection(
         const Direction2d   direction
     ) {
         return direction == Direction2d::left || direction == Direction2d::right;
     }
 
-    static bool
+    bool
     isYDirection(
         const Direction2d   direction
     ) {

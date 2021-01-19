@@ -11,7 +11,7 @@
 #include <ranges>
 
 namespace game::levels {
-    class Level: private game::base::NonCopyable {
+    class Level: private game::base::NonCopyable, public game::ecs::Component {
         private:
             std::vector<std::shared_ptr<Tile>>  tiles;
 
@@ -45,11 +45,5 @@ namespace game::levels {
 
             std::ranges::ref_view<decltype(tiles)>
             getTilesView();
-    };
-
-    class LevelComponent: public game::ecs::Component {
-        public:
-            game::math::Dimension width;
-            game::math::Dimension height;
     };
 }
