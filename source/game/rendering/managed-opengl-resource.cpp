@@ -13,9 +13,11 @@ namespace game::rendering {
         ManagedOpenglBuffer&& buffer
     )
     : descriptor(std::move(buffer.descriptor))
-    , deleter(std::move(deleter))
+    , deleter(std::move(buffer.deleter))
     {
         buffer.descriptor.reset();
+
+        buffer.deleter = nullptr;
     }
 
     ManagedOpenglBuffer::~ManagedOpenglBuffer() {

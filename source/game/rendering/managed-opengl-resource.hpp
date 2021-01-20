@@ -12,8 +12,6 @@ namespace game::rendering {
         public:
             using Deleter = std::function<void(GLsizei number, const GLuint* buffers)>;
 
-            ManagedOpenglBuffer() = default;
-
             ManagedOpenglBuffer(
                 const Deleter&  deleter,
                 const GLuint    descriptor
