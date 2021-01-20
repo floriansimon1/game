@@ -46,9 +46,15 @@ main(
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 stop = true;
+
+                break;
             } else if (event.type == sf::Event::Resized) {
                 glViewport(0, 0, event.size.width, event.size.height);
             }
+        }
+
+        if (stop) {
+            break;
         }
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -59,7 +65,7 @@ main(
 
         lastRenderedFrameTime = currentFrameTime;
 
-        std::this_thread::sleep_for(std::max(std::chrono::milliseconds(0u), std::chrono::milliseconds(1000u / 1440u) - Δt));
+        std::this_thread::sleep_for(std::max(std::chrono::milliseconds(0u), std::chrono::milliseconds(1000u / 144u) - Δt));
     }
 
     return EXIT_SUCCESS;
