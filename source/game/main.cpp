@@ -59,7 +59,7 @@ main(
 
         lastRenderedFrameTime = currentFrameTime;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000u / 144u) - Δt);
+        std::this_thread::sleep_for(std::max(std::chrono::milliseconds(0u), std::chrono::milliseconds(1000u / 1440u) - Δt));
     }
 
     return EXIT_SUCCESS;

@@ -63,7 +63,6 @@ namespace game::rendering {
 
         const auto reposition          = glm::translate(glm::mat4(1.f), glm::vec3(actualX, tile.height + (Δheight / 2.f), actualY));
 
-        // const auto recenter            = getTopLeftCornerMatrix();
         const auto recenter            = glm::translate(glm::mat4(1.0f), glm::vec3(game::math::isYDirection(direction) ? 0.5f : 0.f, 0.f, game::math::isXDirection(direction) ? 0.5f : 0.f));
 
         const auto reorientFactor      = direction == game::math::Direction2d::up || direction == game::math::Direction2d::right ? -1.f : 1.f;
