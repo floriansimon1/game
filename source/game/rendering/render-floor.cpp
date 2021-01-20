@@ -89,60 +89,51 @@ namespace game::rendering {
         const game::levels::Tile&           tile,
         const sf::Texture&                  dirtTexture,
         const glm::mat4&                    projectionViewMatrix,
-        Mesh&                               mesh,
-        const game::math::CardinalDirection cameraDirection
+        Mesh&                               mesh
     ) {
-        if (true || game::math::hasCardinalDirection(cameraDirection, game::math::CardinalDirection::east)) {
-            renderFloorLink(
-                level,
-                tile,
-                dirtTexture,
-                game::math::Direction2d::right,
-                game::math::incrementBounded2dX(level.width, game::math::Direction2d::right, tile.x),
-                tile.y,
-                projectionViewMatrix,
-                mesh
-            );
-        }
+        renderFloorLink(
+            level,
+            tile,
+            dirtTexture,
+            game::math::Direction2d::right,
+            game::math::incrementBounded2dX(level.width, game::math::Direction2d::right, tile.x),
+            tile.y,
+            projectionViewMatrix,
+            mesh
+        );
 
-        if (true || game::math::hasCardinalDirection(cameraDirection, game::math::CardinalDirection::north)) {
-            renderFloorLink(
-                level,
-                tile,
-                dirtTexture,
-                game::math::Direction2d::up,
-                tile.x,
-                game::math::incrementBounded2dY(level.width, game::math::Direction2d::up, tile.y),
-                projectionViewMatrix,
-                mesh
-            );
-        }
+        renderFloorLink(
+            level,
+            tile,
+            dirtTexture,
+            game::math::Direction2d::up,
+            tile.x,
+            game::math::incrementBounded2dY(level.width, game::math::Direction2d::up, tile.y),
+            projectionViewMatrix,
+            mesh
+        );
 
-        if (true || game::math::hasCardinalDirection(cameraDirection, game::math::CardinalDirection::west)) {
-            renderFloorLink(
-                level,
-                tile,
-                dirtTexture,
-                game::math::Direction2d::left,
-                game::math::incrementBounded2dX(level.width, game::math::Direction2d::left, tile.x),
-                tile.y,
-                projectionViewMatrix,
-                mesh
-            );
-        }
+        renderFloorLink(
+            level,
+            tile,
+            dirtTexture,
+            game::math::Direction2d::left,
+            game::math::incrementBounded2dX(level.width, game::math::Direction2d::left, tile.x),
+            tile.y,
+            projectionViewMatrix,
+            mesh
+        );
 
-        if (true || game::math::hasCardinalDirection(cameraDirection, game::math::CardinalDirection::south)) {
-            renderFloorLink(
-                level,
-                tile,
-                dirtTexture,
-                game::math::Direction2d::down,
-                tile.x,
-                game::math::incrementBounded2dY(level.width, game::math::Direction2d::down, tile.y),
-                projectionViewMatrix,
-                mesh
-            );
-        }
+        renderFloorLink(
+            level,
+            tile,
+            dirtTexture,
+            game::math::Direction2d::down,
+            tile.x,
+            game::math::incrementBounded2dY(level.width, game::math::Direction2d::down, tile.y),
+            projectionViewMatrix,
+            mesh
+        );
     }
 
     // Matrix calculations in here are easily memoized.
@@ -153,8 +144,7 @@ namespace game::rendering {
         const glm::mat4&                    projectionViewMatrix,
         Mesh&                               mesh,
         const sf::Texture&                  grassTexture,
-        const sf::Texture&                  dirtTexture,
-        const game::math::CardinalDirection cameraDirection
+        const sf::Texture&                  dirtTexture
     ) {
         // Then translate it to its real position.
         const auto modelMatrix = glm::translate(getTopLeftCornerMatrix(), glm::vec3(
@@ -167,7 +157,7 @@ namespace game::rendering {
 
         mesh.draw(projectionViewMatrix, modelMatrix);
 
-        renderFloorLinks(level, tile, dirtTexture, projectionViewMatrix, mesh, cameraDirection);
+        renderFloorLinks(level, tile, dirtTexture, projectionViewMatrix, mesh);
     }
 
     void
@@ -193,10 +183,8 @@ namespace game::rendering {
 
         const auto projectionViewMatrix = cameraState.value().getProjectionViewMatrix();
 
-        const auto cameraDirection = cameraState.value().rotateAround.getCardinalDirection();
-
         for (const auto& [entity, tile]: scene.findEntitiesWithComponent<game::levels::Tile>()) {
-            renderFloorTile(**level, *tile, projectionViewMatrix, unitSquareMeshIterator->second, grassTextureIterator->second, dirtTextureIterator->second, cameraDirection);
+            renderFloorTile(**level, *tile, projectionViewMatrix, unitSquareMeshIterator->second, grassTextureIterator->second, dirtTextureIterator->second);
         }
     }
 }
