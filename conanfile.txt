@@ -1,8 +1,8 @@
 [requires]
 sfml/2.5.1@bincrafters/stable
 coro/20201021@florian/game
-glad/1.0@florian/game
 range-v3/0.10.0
+glad/0.1.34
 glm/0.9.9.8
 
 [generators]
